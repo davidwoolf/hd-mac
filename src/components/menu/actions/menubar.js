@@ -64,7 +64,7 @@ export function menubar(node, params) {
   window.addEventListener("pointerup", onPointerUp);
   window.addEventListener("keydown", onKeyDown); // keydown is important because we want this to fire before `keyup` or `focusin`
   window.addEventListener("keyup", onKeyUp);
-  node.addEventListener("click", onFocusIn);
+  node.addEventListener("click", onClickIn);
   node.addEventListener("focusin", onFocusIn);
   node.addEventListener("pointermove", onPointerMove);
 
@@ -117,11 +117,36 @@ export function menubar(node, params) {
     updateChild(selected);
   }
 
-  function onFocusIn() {
+  /** @param {Event} e */
+  function onFocusIn(e) {
+    if (!("target" in e)) return;
+    /** @type {Element} */
+    // @ts-expect-error
+    const element = e.target;
+
+    // const topLevelElement = getTopLevelChild(element);
+    // const position = getPosition(topLevelElement);
+    // selected = position;
+
     if (!enabled) {
       enabled = true;
       updateChild(selected);
     }
+  }
+
+  /** @param {Event} e */
+  function onClickIn(e) {
+    if (!("target" in e)) return;
+    /** @type {Element} */
+    // @ts-expect-error
+    const element = e.target;
+
+    const topLevelElement = getTopLevelChild(element);
+    const position = getPosition(topLevelElement);
+    selected = position;
+
+    enabled = true;
+    updateChild(selected);
   }
 
   /** Internal helpers */
@@ -220,6 +245,7 @@ export function menubar(node, params) {
       window.removeEventListener("pointerup", onPointerUp);
       window.removeEventListener("keydown", onKeyDown);
       window.removeEventListener("keyup", onKeyUp);
+      node.removeEventListener("click", onClickIn);
       node.removeEventListener("focusin", onFocusIn);
       node.removeEventListener("pointermove", onPointerMove);
     },
