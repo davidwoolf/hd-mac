@@ -129,9 +129,20 @@ export function menu(node, params) {
     }
   }
 
-  function onPointerUp() {
-    selected = -1;
-    params.requestClose();
+  /** @param {Event} e */
+  function onPointerUp(e) {
+    if (!("target" in e)) return;
+
+    /** @type {Element} */
+    // @ts-expect-error we should have an element here
+    const target = e.target;
+    const topLevelElement = getTopLevelChild(target);
+    const id = node.getAttribute("id");
+
+    if (target.getAttribute("aria-controls") !== id) {
+      selected = -1;
+      params.requestClose();
+    }
   }
 
   /** @param {KeyboardEvent} e */
