@@ -36,15 +36,29 @@ export function menubar(node, params) {
   let enabled = false;
   let selected = 0;
 
-  const [firstElement, ...rest] = Array.from(node.children);
+  function setup() {
+    const [firstElement, ...rest] = Array.from(node.children);
 
-  if (params && "setup" in params && params.setup) {
-    params.setup(firstElement, rest);
+    if (params && "setup" in params && params.setup) {
+      params.setup(firstElement, rest);
+    }
+
+    const firstItem = firstElement.querySelector(item);
+
+    if (firstItem) {
+      firstItem.setAttribute("tabindex", "0");
+    }
+
+    rest.forEach((element) => {
+      const elementItem = element.querySelector(item);
+
+      if (elementItem) {
+        elementItem.setAttribute("tabindex", "-1");
+      }
+    });
   }
 
-  firstElement.querySelector(item)?.setAttribute("tabindex", "0");
-
-  rest.forEach((element) => element.querySelector(item)?.setAttribute("tabindex", "-1"));
+  setup();
 
   /** Event listeners */
   window.addEventListener("pointerup", onPointerUp);
@@ -146,11 +160,19 @@ export function menubar(node, params) {
         params.updateChild(node, element);
       }
 
-      node.querySelector(`[${highlighted}]`)?.removeAttribute(highlighted);
+      const highlightedElement = node.querySelector(`[${highlighted}]`);
+
+      if (highlightedElement) {
+        highlightedElement.removeAttribute(highlighted);
+      }
 
       element.setAttribute(highlighted, "");
-      // @ts-expect-error we know our menuitem will be a button
-      element.querySelector(item)?.focus();
+      const elementItem = element.querySelector(item);
+
+      if (elementItem) {
+        // @ts-expect-error we know our menuitem will be a button
+        elementItem.focus();
+      }
 
       // if we have an open panel
       if (node.querySelector(openMenu)) {

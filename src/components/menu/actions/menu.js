@@ -150,10 +150,18 @@ export function menu(node, params) {
     const element = items[selected];
 
     if (element) {
-      node.querySelector(`[${highlighted}]`)?.removeAttribute(highlighted);
+      const highlightedItem = node.querySelector(`[${highlighted}]`);
+      const elementButton = element.querySelector("button");
+
+      if (highlightedItem) {
+        highlightedItem.removeAttribute(highlighted);
+      }
 
       element.setAttribute(highlighted, "");
-      element.querySelector("button")?.focus();
+
+      if (elementButton) {
+        elementButton.focus();
+      }
     }
   }
 
@@ -193,7 +201,13 @@ export function menu(node, params) {
   /** @param {string} key */
   function findChildByKey(key) {
     const position = Array.from(node.children).findIndex((item) => {
-      return item.querySelector("button")?.innerText.charAt(0).toLowerCase() === key;
+      const itemButton = item.querySelector("button");
+
+      if (itemButton) {
+        return itemButton.innerText.charAt(0).toLowerCase() === key;
+      } else {
+        return -1;
+      }
     });
 
     selected = position;
