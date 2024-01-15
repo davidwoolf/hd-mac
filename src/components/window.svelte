@@ -7,18 +7,25 @@
   export let width = 576;
 </script>
 
-<div style:height="{height}px" style:width="{width}px">
+<div class="container" style:height="{height}px" style:width="{width}px">
   <Title {title} />
-  <slot />
+
+  <div class="contents">
+    <slot />
+  </div>
 </div>
 
 <style>
-  div {
+  .container {
     background: #fff;
     border: 1px solid var(--color-highlight);
     box-shadow: 3px 3px 0px 0px var(--color-highlight);
     position: absolute;
     left: 200px;
     top: 200px;
+  }
+
+  .contents {
+    padding: 1rem;
   }
 </style>
