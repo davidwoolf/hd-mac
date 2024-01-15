@@ -35,13 +35,13 @@
 
 <main>
   <Window title="System Disk" width={576} height={288}>
-    <!-- <Dialog>
+    <Dialog>
       <DialogButton>About</DialogButton>
 
       <DialogContent>
         <p>This is a retro playground</p>
       </DialogContent>
-    </Dialog> -->
+    </Dialog>
 
     <form>
       <!-- svelte-ignore a11y-label-has-associated-control -->
