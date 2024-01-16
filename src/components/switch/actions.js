@@ -9,30 +9,32 @@
  * @param {ControlSwitchAction} params
  */
 export function controlswitch(node, params) {
-  let localValue = params.value;
-
   const button = node.querySelector('[role="switch"]');
 
   if (!button) {
     throw new Error("a button with the role of `switch` needs to be inside of the label");
   }
 
-  node.addEventListener("pointerup", onPointerUp);
-  button.setAttribute("aria-checked", String(localValue));
+  button.addEventListener("click", onClick);
+  button.setAttribute("aria-checked", String(params.value));
+
+  /** @param {boolean} value */
+  function updateValue(value) {
+    if (!button) return;
+
+    params.onChange && params.onChange(value);
+    button.setAttribute("aria-checked", String(value));
+  }
 
   /** @param {Event} e */
-  function onPointerUp(e) {
-    console.log("onclick");
+  function onClick(e) {
+    e.preventDefault();
 
     if (button) {
       if (button.getAttribute("aria-checked") === "true") {
-        localValue = false;
-        params.onChange && params.onChange(localValue);
-        button.setAttribute("aria-checked", "false");
+        updateValue(false);
       } else {
-        localValue = true;
-        params.onChange && params.onChange(localValue);
-        button.setAttribute("aria-checked", "true");
+        updateValue(true);
       }
     }
   }
@@ -40,10 +42,10 @@ export function controlswitch(node, params) {
   return {
     /** @param {ControlSwitchAction} params */
     update(params) {
-      localValue = params.value;
+      button.setAttribute("aria-checked", String(params.value));
     },
     destroy() {
-      node.removeEventListener("pointerup", onPointerUp);
+      button.removeEventListener("click", onClick);
     },
   };
 }

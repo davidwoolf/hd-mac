@@ -1,6 +1,7 @@
 <script>
   import { controlswitch } from "./actions.js";
 
+  export let disabled = false;
   export let value = false;
 
   /** @type {((value: boolean) => void) | undefined} */
@@ -10,14 +11,11 @@
 <label
   use:controlswitch={{
     value,
-    onChange: (value) => {
-      // console.log(value);
-      onChange && onChange(value);
-    },
+    onChange: (value) => onChange && onChange(value),
   }}>
   <span>Mode</span>
 
-  <button role="switch" aria-checked={value}>
+  <button type="button" {disabled} role="switch" aria-checked={value}>
     <span />
   </button>
 </label>
@@ -25,7 +23,7 @@
 <style>
   label {
     align-items: center;
-    display: flex;
+    display: inline-flex;
     gap: 1rem;
   }
 

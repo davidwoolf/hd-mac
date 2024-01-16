@@ -1,6 +1,9 @@
 <script>
   import Window from "@components/window.svelte";
   import MenuBar from "@components/menu/bar.svelte";
+
+  /* AnatomyKit */
+  import Button from "@components/button.svelte";
   import Menu from "@components/menu/menu.svelte";
   import MenuItem from "@components/menu/item.svelte";
   import Dialog from "@components/dialog/dialog.svelte";
@@ -10,6 +13,7 @@
   import Separator from "@components/separator.svelte";
   import Slider from "@components/slider/slider.svelte";
   import Switch from "@components/switch/switch.svelte";
+  import Tooltip from "@components/tooltip/tooltip.svelte";
   import "../app.css";
 </script>
 
@@ -34,7 +38,7 @@
 </header>
 
 <main>
-  <Window title="System Disk" width={576} height={288}>
+  <Window title="System Disk" width={576} height={500}>
     <Dialog>
       <DialogButton>About</DialogButton>
 
@@ -43,29 +47,35 @@
       </DialogContent>
     </Dialog>
 
-    <form>
-      <!-- svelte-ignore a11y-label-has-associated-control -->
-      <label style:width="12rem" style:height="12rem" style:display="block">
-        <span>Volume</span>
+    <!-- svelte-ignore a11y-label-has-associated-control -->
+    <label style:width="12rem" style:display="block">
+      <span>Volume</span>
 
-        <Slider
-          name="volumn"
-          min={1}
-          max={7}
-          value={3}
-          showIndicators={true}
-          onUpdate={(value) => {
-            console.log(value);
-          }} />
+      <Slider
+        name="volumn"
+        min={1}
+        max={7}
+        value={3}
+        showIndicators={true}
+        onUpdate={(value) => {
+          console.log(value);
+        }} />
+    </label>
 
-        <div style:height="30px" />
-        <Progress value={50} />
-        <div style:height="30px" />
-        <Separator />
-        <div style:height="30px" />
-        <Switch />
-      </label>
-    </form>
+    <div style:height="30px" />
+    <Progress value={50} />
+    <div style:height="30px" />
+    <Separator />
+    <div style:height="30px" />
+    <Switch />
+    <div style:height="30px" />
+    <Tooltip>
+      <svelte:fragment slot="info">I am a tooltip</svelte:fragment>
+      <div slot="content">
+        <Button>click me</Button>
+      </div>
+    </Tooltip>
+    <div style:height="30px" />
   </Window>
 </main>
 
