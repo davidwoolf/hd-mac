@@ -5,7 +5,6 @@
 
 import {
   addListener,
-  getDirectChild,
   getElementIndex,
   selectNext,
   selectPrevious,
@@ -23,6 +22,8 @@ export function accordion(node, params) {
    * - [ ] multiple
    * - [ ] orientation
    * - [ ] disabled
+   * - [ ] disabled items
+   * - [ ] callback hooks
    */
 
   const keys = ["ArrowDown", "ArrowUp"];
@@ -70,11 +71,12 @@ export function accordion(node, params) {
 
       if (index === 0) {
         element.setAttribute("data-state", "open");
-        contents.style.display = "block";
+
         trigger.setAttribute("tabindex", "0");
       } else {
         element.setAttribute("data-state", "closed");
-        contents.style.display = "none";
+
+        contents.setAttribute("hidden", "");
         trigger.setAttribute("tabindex", "-1");
       }
 
@@ -90,10 +92,15 @@ export function accordion(node, params) {
 
   /** Events */
   const unsub = [
+    addListener(window, "pointerup", onPointerUp),
     addListener(window, "keyup", onKeyUp),
     addListener(window, "keydown", onKeyDown),
     addListener(node, "focusin", onFocusIn),
   ];
+
+  function onPointerUp() {
+    enabled = false;
+  }
 
   /** @param {KeyboardEvent} e */
   function onKeyUp(e) {
@@ -148,16 +155,17 @@ export function accordion(node, params) {
 
     if (element.getAttribute("data-state") === "open") {
       element.setAttribute("data-state", "closed");
-      element.querySelector('[role="region"]').style.display = "none";
+
+      element.querySelector('[role="region"]').setAttribute("hidden", "");
     } else {
       element.setAttribute("data-state", "open");
-      element.querySelector('[role="region"]').style.display = "block";
+      element.querySelector('[role="region"]').removeAttribute("hidden");
 
       Array.from(items)
         .filter((item) => item !== element)
         .forEach((item) => {
           item.setAttribute("data-state", "closed");
-          item.querySelector('[role="region"]').style.display = "none";
+          item.querySelector('[role="region"]').setAttribute("hidden", "");
         });
     }
   }
@@ -189,22 +197,6 @@ export function accordion(node, params) {
     destroy() {
       unsub.forEach((item) => item());
       triggerUnsubs.forEach((item) => item());
-    },
-  };
-}
-
-/**
- *
- * @param {HTMLElement} node
- */
-export function accordiontrigger(node) {
-  const unsub = [addListener(node, "click", onClick)];
-
-  function onClick() {}
-
-  return {
-    destroy() {
-      unsub.forEach((item) => item());
     },
   };
 }

@@ -75,6 +75,7 @@ export function menubar(node, params) {
   node.addEventListener("pointermove", onPointerMove);
 
   function onPointerUp() {
+    console.log("onPointerUp");
     enabled = false;
   }
 

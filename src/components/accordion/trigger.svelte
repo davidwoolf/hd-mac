@@ -1,7 +1,3 @@
-<script>
-  import { accordiontrigger } from "./action";
-</script>
-
 <h2>
   <button type="button">
     <slot />

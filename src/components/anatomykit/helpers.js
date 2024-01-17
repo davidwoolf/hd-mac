@@ -42,6 +42,40 @@ export function selectPrevious(node, current) {
 /**
  *
  * @param {Element} node
+ * @param {Element | null} current
+ */
+export function findPreviousChild(node, current) {
+  if (current === null) return node.children[0];
+
+  const index = Array.from(node.children).findIndex((item) => item === current) - 1;
+
+  if (index < 0) {
+    return node.children[node.children.length - 1];
+  }
+
+  return node.children[index];
+}
+
+/**
+ *
+ * @param {Element} node
+ * @param {Element | null} current
+ */
+export function findNextChild(node, current) {
+  if (current === null) return node.firstChild;
+
+  const index = Array.from(node.children).findIndex((item) => item === current) + 1;
+
+  if (index > node.children.length - 1) {
+    return node.children[0];
+  }
+
+  return node.children[index];
+}
+
+/**
+ *
+ * @param {Element} node
  * @param {number} current
  */
 export function selectNext(node, current) {
@@ -59,4 +93,19 @@ export function addListener(element, action, listener) {
   element.addEventListener(action, listener);
 
   return () => element.removeEventListener(action, listener);
+}
+
+/**
+ *
+ * @param {Element} element
+ * @param {Record<string, string | boolean | number>} attributes
+ */
+export function setAttributes(element, attributes) {
+  Object.entries(attributes).forEach(([key, value]) => {
+    if (typeof value === "boolean" && value === false) {
+      element.removeAttribute(key);
+    } else {
+      element.setAttribute(key, String(value));
+    }
+  });
 }

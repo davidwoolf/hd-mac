@@ -21,6 +21,11 @@
   import AccordionItem from "@components/accordion/item.svelte";
   import AccordionTrigger from "@components/accordion/trigger.svelte";
   import AccordionContent from "@components/accordion/content.svelte";
+
+  import Tabs from "@components/tabs/tabs.svelte";
+  import TabsList from "@components/tabs/list.svelte";
+  import TabsTrigger from "@components/tabs/trigger.svelte";
+  import TabsContent from "@components/tabs/content.svelte";
 </script>
 
 <header>
@@ -63,9 +68,7 @@
         max={7}
         value={3}
         showIndicators={true}
-        onUpdate={(value) => {
-          console.log(value);
-        }} />
+        onUpdate={(value) => {}} />
     </label>
 
     <div style:height="30px" />
@@ -105,6 +108,30 @@
         <AccordionContent>I am the third content</AccordionContent>
       </AccordionItem>
     </Accordion>
+
+    <div style:height="30px" />
+
+    <Tabs>
+      <TabsList aria-label="Tabs example">
+        <TabsTrigger value="tab1">Tab 1</TabsTrigger>
+
+        <TabsTrigger value="tab2">Tab 2</TabsTrigger>
+
+        <TabsTrigger value="tab3">Tab 3</TabsTrigger>
+      </TabsList>
+
+      <TabsContent value="tab1">
+        <p>Tab 1</p>
+      </TabsContent>
+
+      <TabsContent value="tab2">
+        <p>Tab 2</p>
+      </TabsContent>
+
+      <TabsContent value="tab3">
+        <p>Tab 3</p>
+      </TabsContent>
+    </Tabs>
   </Window>
 </main>
 
