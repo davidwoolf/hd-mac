@@ -5,9 +5,16 @@
   export let title;
   export let height = 288;
   export let width = 576;
+  export let left = 0;
+  export let top = 0;
 </script>
 
-<div class="container" style:height="{height}px" style:width="{width}px">
+<div
+  class="container"
+  style:height="{height}px"
+  style:width="{width}px"
+  style:left="{left}px"
+  style:top="{top}px">
   <Title {title} />
 
   <div class="contents">
@@ -21,8 +28,6 @@
     border: 1px solid var(--color-highlight);
     box-shadow: 3px 3px 0px 0px var(--color-highlight);
     position: absolute;
-    left: 200px;
-    top: 200px;
   }
 
   .contents {

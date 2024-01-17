@@ -60,7 +60,7 @@ function getMenuSelectors(selectors) {
 }
 
 /**
- * @typedef MenuArgs
+ * @typedef Params
  * @property {boolean} enabled
  * @property {() => void} requestOpen
  * @property {() => void} requestClose
@@ -72,7 +72,7 @@ function getMenuSelectors(selectors) {
 /**
  *
  * @param {HTMLElement} node
- * @param {MenuArgs} params
+ * @param {Params} params
  */
 export function menu(node, params) {
   // necessary to overwrite with new args on updates

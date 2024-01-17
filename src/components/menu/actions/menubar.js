@@ -1,3 +1,9 @@
+import {
+  getElementIndex,
+  selectNext,
+  selectPrevious,
+} from "@components/anatomykit/helpers";
+
 /**
  *
  * @param {Record<string, string>} [selectors]
@@ -14,7 +20,7 @@ function getMenuBarSelectors(selectors) {
 }
 
 /**
- * @typedef MenuBarArgs
+ * @typedef Params
  * @property {"horizontal" | "vertical"} [direction]
  * @property {Record<string, string>} [selectors]
  * @property {(firstItem: Element, rest: Element[]) => void} [setup]
@@ -24,7 +30,7 @@ function getMenuBarSelectors(selectors) {
 /**
  *
  * @param {Element} node
- * @param {MenuBarArgs} [params]
+ * @param {Params} [params]
  */
 export function menubar(node, params) {
   /* Args */
@@ -85,19 +91,23 @@ export function menubar(node, params) {
 
     if (params && "direction" in params && params.direction === "vertical") {
       if (e.key === "ArrowUp") {
-        selectPreviousChild();
+        selected = selectPrevious(node, selected);
+        updateChild(selected);
       }
 
       if (e.key === "ArrowDown") {
-        selectNextChild();
+        selected = selectNext(node, selected);
+        updateChild(selected);
       }
     } else {
       if (e.key === "ArrowLeft") {
-        selectPreviousChild();
+        selected = selectPrevious(node, selected);
+        updateChild(selected);
       }
 
       if (e.key === "ArrowRight") {
-        selectNextChild();
+        selected = selectNext(node, selected);
+        updateChild(selected);
       }
     }
   }
@@ -110,8 +120,7 @@ export function menubar(node, params) {
     // @ts-ignore
     const element = e.target;
 
-    const topLevelElement = getTopLevelChild(element);
-    const position = getPosition(topLevelElement);
+    const position = getElementIndex(node, element);
 
     selected = position;
     updateChild(selected);
@@ -120,13 +129,6 @@ export function menubar(node, params) {
   /** @param {Event} e */
   function onFocusIn(e) {
     if (!("target" in e)) return;
-    /** @type {Element} */
-    // @ts-expect-error
-    const element = e.target;
-
-    // const topLevelElement = getTopLevelChild(element);
-    // const position = getPosition(topLevelElement);
-    // selected = position;
 
     if (!enabled) {
       enabled = true;
@@ -141,8 +143,7 @@ export function menubar(node, params) {
     // @ts-expect-error
     const element = e.target;
 
-    const topLevelElement = getTopLevelChild(element);
-    const position = getPosition(topLevelElement);
+    const position = getElementIndex(node, element);
     selected = position;
 
     enabled = true;
@@ -150,30 +151,6 @@ export function menubar(node, params) {
   }
 
   /** Internal helpers */
-
-  /**
-   *
-   * @param {Node} element
-   * @returns {Node}
-   */
-  function getTopLevelChild(element) {
-    if (!element.parentNode) {
-      return element;
-    }
-
-    if (element.parentNode === node) {
-      return element;
-    }
-
-    return getTopLevelChild(element.parentNode);
-  }
-
-  /** @param {Node} element */
-  function getPosition(element) {
-    return Array.from(node.children).findIndex((item) => {
-      return item === element;
-    });
-  }
 
   /** @param {number} selected */
   function updateChild(selected) {
@@ -212,21 +189,6 @@ export function menubar(node, params) {
         });
       }
     }
-  }
-
-  function selectPreviousChild() {
-    const items = node.children;
-
-    selected = selected > 0 ? selected - 1 : items.length - 1;
-
-    updateChild(selected);
-  }
-
-  function selectNextChild() {
-    const items = node.children;
-    selected = selected < items.length - 1 ? selected + 1 : 0;
-
-    updateChild(selected);
   }
 
   return {

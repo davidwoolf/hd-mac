@@ -15,6 +15,12 @@
   import Switch from "@components/switch/switch.svelte";
   import Tooltip from "@components/tooltip/tooltip.svelte";
   import "../app.css";
+  import Toggle from "@components/toggle/toggle.svelte";
+  import ToggleGroup from "@components/toggle/group.svelte";
+  import Accordion from "@components/accordion/accordion.svelte";
+  import AccordionItem from "@components/accordion/item.svelte";
+  import AccordionTrigger from "@components/accordion/trigger.svelte";
+  import AccordionContent from "@components/accordion/content.svelte";
 </script>
 
 <header>
@@ -38,7 +44,7 @@
 </header>
 
 <main>
-  <Window title="System Disk" width={576} height={500}>
+  <Window title="System Disk" width={576} height={500} left={100} top={50}>
     <Dialog>
       <DialogButton>About</DialogButton>
 
@@ -76,6 +82,29 @@
       </div>
     </Tooltip>
     <div style:height="30px" />
+    <ToggleGroup>
+      <Toggle value={false}>press me</Toggle>
+      <Toggle value={false}>press me</Toggle>
+    </ToggleGroup>
+  </Window>
+
+  <Window title="Finder" width={476} height={400} left={776} top={50}>
+    <Accordion>
+      <AccordionItem>
+        <AccordionTrigger>Item 1</AccordionTrigger>
+        <AccordionContent>I am the first content</AccordionContent>
+      </AccordionItem>
+
+      <AccordionItem>
+        <AccordionTrigger>Item 1</AccordionTrigger>
+        <AccordionContent>I am the second content</AccordionContent>
+      </AccordionItem>
+
+      <AccordionItem>
+        <AccordionTrigger>Item 1</AccordionTrigger>
+        <AccordionContent>I am the third content</AccordionContent>
+      </AccordionItem>
+    </Accordion>
   </Window>
 </main>
 

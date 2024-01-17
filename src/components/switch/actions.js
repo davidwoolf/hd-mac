@@ -1,12 +1,12 @@
 /**
- * @typedef ControlSwitchAction
+ * @typedef Params
  * @property {boolean} value
  * @property {(value: boolean) => void} [onChange]
  */
 
 /**
  * @param {HTMLElement} node
- * @param {ControlSwitchAction} params
+ * @param {Params} params
  */
 export function controlswitch(node, params) {
   const button = node.querySelector('[role="switch"]');

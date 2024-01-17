@@ -1,7 +1,8 @@
+import { addListener } from "@components/anatomykit/helpers";
 import { tick } from "svelte";
 
 /**
- * @typedef TooltipAction
+ * @typedef Params
  * @property {(value: boolean) => void} onChange
  * @property {number} [offset]
  * @property {"top-left" |  "top-center" |  "top-right" |  "bottom-left" |  "bottom-center" |  "bottom-right" |"left-top" | "left-center" |  "left-bottom" |  "right-top" |  "right-center" |  "right-bottom"} [position]
@@ -10,7 +11,7 @@ import { tick } from "svelte";
 /**
  *
  * @param {HTMLElement} node
- * @param {TooltipAction} params
+ * @param {Params} params
  */
 export function tooltip(node, params) {
   let focused = false;
@@ -18,13 +19,13 @@ export function tooltip(node, params) {
   let scopedPosition =
     "position" in params && params.position ? params.position : "top-center";
 
-  // const tooltip = node.querySelector('[role="tooltip"]');
-
-  window.addEventListener("keyup", onKeyUp);
-  node.addEventListener("pointerenter", showTooltipOnPointerEnter);
-  node.addEventListener("pointerleave", hideTooltipOnPointerLeave);
-  node.addEventListener("focusin", showTooltipOnFocusIn);
-  node.addEventListener("focusout", hideTooltipOnFocusOut);
+  const unsub = [
+    addListener(window, "keyup", onKeyUp),
+    addListener(node, "pointerenter", showTooltipOnPointerEnter),
+    addListener(node, "pointerleave", hideTooltipOnPointerLeave),
+    addListener(node, "focusin", showTooltipOnFocusIn),
+    addListener(node, "focusout", hideTooltipOnFocusOut),
+  ];
 
   /** @param {KeyboardEvent} e */
   function onKeyUp(e) {
@@ -36,11 +37,10 @@ export function tooltip(node, params) {
   function styleTooltip() {
     /** @type {HTMLElement | null} */
     const tooltip = node.querySelector('[role="tooltip"]');
-    console.log(tooltip);
 
     if (!tooltip) return;
 
-    const styles = getPlacement(scopedPosition);
+    const styles = getPlacement(scopedPosition, scopedOffset);
 
     Object.entries(styles).forEach(([key, value]) => {
       // @ts-expect-error
@@ -50,9 +50,8 @@ export function tooltip(node, params) {
 
   function showTooltipOnPointerEnter() {
     if (focused) return;
-
     params.onChange(true);
-    tick();
+
     setTimeout(() => {
       styleTooltip();
     });
@@ -61,7 +60,7 @@ export function tooltip(node, params) {
   function showTooltipOnFocusIn() {
     focused = true;
     params.onChange(true);
-    tick();
+
     setTimeout(() => {
       styleTooltip();
     });
@@ -79,26 +78,23 @@ export function tooltip(node, params) {
   }
 
   return {
-    /** @param {TooltipAction} params */
+    /** @param {Params} params */
     update(params) {
       scopedOffset = "offset" in params && params.offset ? params.offset : 0;
       scopedPosition =
         "position" in params && params.position ? params.position : "top-center";
     },
     destroy() {
-      window.removeEventListener("keyup", onKeyUp);
-      node.removeEventListener("pointerenter", showTooltipOnPointerEnter);
-      node.removeEventListener("pointerleave", hideTooltipOnPointerLeave);
-      node.removeEventListener("focusin", showTooltipOnFocusIn);
-      node.removeEventListener("focusout", hideTooltipOnFocusOut);
+      unsub.forEach((item) => item());
     },
   };
 }
 
 /**
  * @param { "top-left" |  "top-center" |  "top-right" |  "bottom-left" |  "bottom-center" |  "bottom-right" |"left-top" |  "left-center" |  "left-bottom" |  "right-top" |  "right-center" |  "right-bottom" } position
+ * @param {number} offset
  */
-function getPlacement(position) {
+function getPlacement(position, offset) {
   let styles = {
     position: "absolute",
     /** @TODO set limit and take block-size into consideration as well */
