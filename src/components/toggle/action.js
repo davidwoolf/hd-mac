@@ -83,11 +83,20 @@ export function togglegroup(node, params) {
 
   /** Events */
   const unsub = [
+    addListener(window, "pointerup", onPointerUp),
     addListener(window, "keyup", onKeyUp),
     addListener(window, "keydown", onKeyDown),
     addListener(node, "focusin", onFocusIn),
-    addListener(node, "click", onClickIn),
+    addListener(node, "click", onClick),
   ];
+
+  function onPointerUp() {
+    enabled = false;
+  }
+
+  function onClick() {
+    enabled = true;
+  }
 
   /** @param {KeyboardEvent} e */
   function onKeyUp(e) {
@@ -123,28 +132,28 @@ export function togglegroup(node, params) {
 
   /** @param {Event} e */
   function onFocusIn(e) {
-    if (!("target" in e)) return;
+    if (!e.target || !(e.target instanceof HTMLElement)) return;
 
-    if (!enabled) {
-      enabled = true;
-      updateSelection(selected);
-    }
+    enabled = true;
+    selected = getElementIndex(node, e.target);
+
+    updateSelection(selected > -1 ? selected : 0);
   }
 
   /** @param {Event} e */
-  function onClickIn(e) {
-    if (!("target" in e)) return;
+  // function onClickIn(e) {
+  //   if (!("target" in e)) return;
 
-    /** @type {Element} */
-    // @ts-expect-error
-    const element = e.target;
+  //   /** @type {Element} */
+  //   // @ts-expect-error
+  //   const element = e.target;
 
-    const position = getElementIndex(node, element);
+  //   const position = getElementIndex(node, element);
 
-    selected = position;
-    enabled = true;
-    updateSelection(selected);
-  }
+  //   selected = position;
+  //   enabled = true;
+  //   updateSelection(selected);
+  // }
 
   /** @param {number} selected */
   function updateSelection(selected) {

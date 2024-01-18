@@ -8,6 +8,6 @@
 
 <style>
   div {
-    display: flex;
+    display: inline-flex;
   }
 </style>
