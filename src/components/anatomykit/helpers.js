@@ -94,10 +94,12 @@ export function addListener(element, action, listener) {
 
 /**
  *
- * @param {Element} element
+ * @param {Element | null} element
  * @param {Record<string, string | boolean | number>} attributes
  */
 export function setAttributes(element, attributes) {
+  if (!element) return;
+
   Object.entries(attributes).forEach(([key, value]) => {
     if (typeof value === "boolean" && value === false) {
       element.removeAttribute(key);

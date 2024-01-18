@@ -35,6 +35,9 @@
   import SelectGroup from "@components/select/group.svelte";
   import SelectOption from "@components/select/option.svelte";
   import SelectSeparator from "@components/select/separator.svelte";
+
+  // Toolbar
+  import Toolbar from "@components/toolbar/toolbar.svelte";
 </script>
 
 <header>
@@ -163,6 +166,14 @@
         </SelectGroup>
       </SelectContent>
     </Select>
+
+    <div style:height="30px" />
+
+    <Toolbar label="Toolbar items">
+      <Toggle>Bold</Toggle>
+      <Toggle>Italic</Toggle>
+      <Toggle>Underline</Toggle>
+    </Toolbar>
   </Window>
 </main>
 

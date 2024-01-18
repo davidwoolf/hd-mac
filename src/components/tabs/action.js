@@ -8,6 +8,7 @@ import {
   findNextChild,
   findPreviousChild,
   getElementById,
+  getElementByQuery,
   setAttributes,
 } from "@components/anatomykit/helpers";
 import { nanoid } from "nanoid";
@@ -30,17 +31,12 @@ export function tabs(node, params) {
   const id = nanoid();
   const keys = ["ArrowLeft", "ArrowRight"];
   let enabled = false;
-  let selected = 0;
 
   /** @type {(() => void)[]} */
   let triggerUnsubs = [];
 
-  const nav = node.querySelector('[role="tablist"]');
+  const nav = getElementByQuery(node, '[role="tablist"]');
   const panels = node.querySelectorAll('[role="tabpanel"]');
-
-  if (!nav) {
-    throw new Error('tab components require an element with the role of "tablist"');
-  }
 
   setAttributes(nav, {
     tabIndex: "0",
@@ -101,8 +97,20 @@ export function tabs(node, params) {
 
   /** @param {KeyboardEvent} e */
   function onKeyDown(e) {
+    if (!enabled) return;
+
     if (e.key === "Tab") {
       enabled = false;
+
+      setAttributes(nav, {
+        tabindex: -1,
+      });
+
+      setTimeout(() => {
+        setAttributes(nav, {
+          tabindex: 0,
+        });
+      }, 1);
     }
   }
 

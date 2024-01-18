@@ -2,7 +2,7 @@
   import { togglegroup } from "./action";
 </script>
 
-<div use:togglegroup>
+<div role="group" use:togglegroup={{}}>
   <slot />
 </div>
 

@@ -8,6 +8,7 @@ import {
   getElementIndex,
   selectNext,
   selectPrevious,
+  setAttributes,
 } from "@components/anatomykit/helpers";
 
 /**
@@ -69,25 +70,16 @@ export function togglegroup(node, params) {
   let selected = 0;
   const keys = ["ArrowLeft", "ArrowRight", "ArrowDown", "ArrowUp"];
 
-  function setup() {
-    const [firstElement, ...rest] = Array.from(node.children);
-
-    const firstItem = firstElement.querySelector("[aria-pressed]");
-
-    if (firstItem) {
-      firstItem.setAttribute("tabindex", "0");
-    }
-
-    rest.forEach((element) => {
-      const elementItem = element.querySelector("[aria-pressed]");
-
-      if (elementItem) {
-        elementItem.setAttribute("tabindex", "-1");
-      }
+  Array.from(node.children).forEach((item, index) => {
+    const element = item.querySelector("[aria-pressed]");
+    setAttributes(element, {
+      tabindex: index === 0 ? 0 : -1,
     });
-  }
+  });
 
-  setup();
+  setAttributes(node, {
+    tabindex: 0,
+  });
 
   /** Events */
   const unsub = [
@@ -103,19 +95,29 @@ export function togglegroup(node, params) {
 
     if (e.key === "ArrowLeft") {
       selected = selectPrevious(node.children, selected);
-      updateChild(selected);
+      updateSelection(selected);
     }
 
     if (e.key === "ArrowRight") {
       selected = selectNext(node.children, selected);
-      updateChild(selected);
+      updateSelection(selected);
     }
   }
 
   /** @param {KeyboardEvent} e */
   function onKeyDown(e) {
+    if (!enabled) return;
     if (e.key === "Tab") {
       enabled = false;
+      setAttributes(node, {
+        tabindex: -1,
+      });
+
+      setTimeout(() => {
+        setAttributes(node, {
+          tabindex: 0,
+        });
+      }, 1);
     }
   }
 
@@ -125,7 +127,7 @@ export function togglegroup(node, params) {
 
     if (!enabled) {
       enabled = true;
-      updateChild(selected);
+      updateSelection(selected);
     }
   }
 
@@ -141,22 +143,30 @@ export function togglegroup(node, params) {
 
     selected = position;
     enabled = true;
-    updateChild(selected);
+    updateSelection(selected);
   }
 
   /** @param {number} selected */
-  function updateChild(selected) {
-    const items = node.children;
-    const element = items[selected];
+  function updateSelection(selected) {
+    Array.from(node.children).forEach((item, index) => {
+      /** @type {HTMLElement | null} */
+      const element = item.querySelector("[aria-pressed]");
 
-    if (element) {
-      const elementItem = element.querySelector("[aria-pressed]");
+      if (!element) return;
+      if (index === selected) {
+        setAttributes(element, {
+          tabindex: false,
+        });
 
-      if (elementItem) {
-        // @ts-expect-error we know our menuitem will be a button
-        elementItem.focus();
+        setTimeout(() => {
+          element.focus();
+        });
+      } else {
+        setAttributes(element, {
+          tabindex: -1,
+        });
       }
-    }
+    });
   }
 
   return {

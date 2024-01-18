@@ -106,14 +106,11 @@ export function select(node, params) {
 
     if (e.key === "ArrowUp") {
       selected = selectPrevious(options, selected);
-
       updateOption(selected);
     }
 
     if (e.key === "ArrowDown") {
       selected = selectNext(options, selected);
-      console.log(selected);
-
       updateOption(selected);
     }
 
