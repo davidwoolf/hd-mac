@@ -26,6 +26,15 @@
   import TabsList from "@components/tabs/list.svelte";
   import TabsTrigger from "@components/tabs/trigger.svelte";
   import TabsContent from "@components/tabs/content.svelte";
+
+  // Select
+  import Select from "@components/select/select.svelte";
+  import SelectContent from "@components/select/content.svelte";
+  import SelectTrigger from "@components/select/trigger.svelte";
+  import SelectLabel from "@components/select/label.svelte";
+  import SelectGroup from "@components/select/group.svelte";
+  import SelectOption from "@components/select/option.svelte";
+  import SelectSeparator from "@components/select/separator.svelte";
 </script>
 
 <header>
@@ -91,7 +100,7 @@
     </ToggleGroup>
   </Window>
 
-  <Window title="Finder" width={476} height={400} left={776} top={50}>
+  <Window title="Finder" width={476} height={500} left={776} top={50}>
     <Accordion>
       <AccordionItem>
         <AccordionTrigger>Item 1</AccordionTrigger>
@@ -132,6 +141,28 @@
         <p>Tab 3</p>
       </TabsContent>
     </Tabs>
+
+    <div style:height="30px" />
+
+    <Select>
+      <SelectTrigger>Open menu</SelectTrigger>
+
+      <SelectContent>
+        <SelectGroup>
+          <SelectLabel>Group one</SelectLabel>
+          <SelectOption value="apple">Apple</SelectOption>
+          <SelectOption value="pear">Pear</SelectOption>
+        </SelectGroup>
+
+        <SelectSeparator />
+
+        <SelectGroup>
+          <SelectLabel>Group two</SelectLabel>
+          <SelectOption value="broccoli">Broccoli</SelectOption>
+          <SelectOption value="squash">Squash</SelectOption>
+        </SelectGroup>
+      </SelectContent>
+    </Select>
   </Window>
 </main>
 

@@ -107,12 +107,12 @@ export function accordion(node, params) {
     if (!enabled || !keys.includes(e.key)) return;
 
     if (e.key === "ArrowUp") {
-      selected = selectPrevious(node, selected);
+      selected = selectPrevious(node.children, selected);
       updateTrigger(selected);
     }
 
     if (e.key === "ArrowDown") {
-      selected = selectNext(node, selected);
+      selected = selectNext(node.children, selected);
       updateTrigger(selected);
     }
   }

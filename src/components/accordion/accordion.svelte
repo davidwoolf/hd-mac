@@ -2,10 +2,7 @@
   import { accordion } from "./action";
 </script>
 
-<div
-  use:accordion={{
-    value: true, // remove
-  }}>
+<div use:accordion={{}}>
   <slot />
 </div>
 

@@ -75,7 +75,6 @@ export function menubar(node, params) {
   node.addEventListener("pointermove", onPointerMove);
 
   function onPointerUp() {
-    console.log("onPointerUp");
     enabled = false;
   }
 
@@ -92,22 +91,22 @@ export function menubar(node, params) {
 
     if (params && "direction" in params && params.direction === "vertical") {
       if (e.key === "ArrowUp") {
-        selected = selectPrevious(node, selected);
+        selected = selectPrevious(node.children, selected);
         updateChild(selected);
       }
 
       if (e.key === "ArrowDown") {
-        selected = selectNext(node, selected);
+        selected = selectNext(node.children, selected);
         updateChild(selected);
       }
     } else {
       if (e.key === "ArrowLeft") {
-        selected = selectPrevious(node, selected);
+        selected = selectPrevious(node.children, selected);
         updateChild(selected);
       }
 
       if (e.key === "ArrowRight") {
-        selected = selectNext(node, selected);
+        selected = selectNext(node.children, selected);
         updateChild(selected);
       }
     }
@@ -121,9 +120,7 @@ export function menubar(node, params) {
     // @ts-ignore
     const element = e.target;
 
-    const position = getElementIndex(node, element);
-
-    selected = position;
+    selected = getElementIndex(node, element);
     updateChild(selected);
   }
 

@@ -6,9 +6,6 @@
   requirements 
   - dir
 -->
-<div
-  use:tabs={{
-    value: true, // remove
-  }}>
+<div use:tabs={{}}>
   <slot />
 </div>

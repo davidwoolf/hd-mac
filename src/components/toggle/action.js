@@ -102,12 +102,12 @@ export function togglegroup(node, params) {
     if (!enabled || !keys.includes(e.key)) return;
 
     if (e.key === "ArrowLeft") {
-      selected = selectPrevious(node, selected);
+      selected = selectPrevious(node.children, selected);
       updateChild(selected);
     }
 
     if (e.key === "ArrowRight") {
-      selected = selectNext(node, selected);
+      selected = selectNext(node.children, selected);
       updateChild(selected);
     }
   }

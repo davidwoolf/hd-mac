@@ -30,12 +30,10 @@ export function getElementIndex(node, element) {
 
 /**
  *
- * @param {Element} node
+ * @param {HTMLCollection | NodeListOf<Element>} items
  * @param {number} current
  */
-export function selectPrevious(node, current) {
-  const items = node.children;
-
+export function selectPrevious(items, current) {
   return current > 0 ? current - 1 : items.length - 1;
 }
 
@@ -62,7 +60,7 @@ export function findPreviousChild(node, current) {
  * @param {Element | null} current
  */
 export function findNextChild(node, current) {
-  if (current === null) return node.firstChild;
+  if (current === null) return node.children[0];
 
   const index = Array.from(node.children).findIndex((item) => item === current) + 1;
 
@@ -75,11 +73,10 @@ export function findNextChild(node, current) {
 
 /**
  *
- * @param {Element} node
+ * @param {HTMLCollection | NodeListOf<Element>} items
  * @param {number} current
  */
-export function selectNext(node, current) {
-  const items = node.children;
+export function selectNext(items, current) {
   return current < items.length - 1 ? current + 1 : 0;
 }
 
@@ -108,4 +105,31 @@ export function setAttributes(element, attributes) {
       element.setAttribute(key, String(value));
     }
   });
+}
+
+/**
+ *
+ * @param {string | null | undefined} id
+ */
+export function getElementById(id) {
+  if (typeof id !== "string") {
+    return null;
+  }
+
+  return document.getElementById(id);
+}
+
+/**
+ *
+ * @param {Element | HTMLElement} root
+ * @param {string} query
+ */
+export function getElementByQuery(root, query) {
+  const element = root.querySelector(query);
+
+  if (!element || !(element instanceof HTMLElement)) {
+    throw new Error(`an required element matching ${query} is missing`);
+  }
+
+  return element;
 }

@@ -7,9 +7,7 @@ import {
   addListener,
   findNextChild,
   findPreviousChild,
-  getElementIndex,
-  selectNext,
-  selectPrevious,
+  getElementById,
   setAttributes,
 } from "@components/anatomykit/helpers";
 import { nanoid } from "nanoid";
@@ -88,14 +86,16 @@ export function tabs(node, params) {
 
     if (e.key === "ArrowLeft") {
       const item = findPreviousChild(nav, nav.querySelector('[aria-selected="true"]'));
+      const content = getElementById(item.getAttribute("aria-controls"));
       updateNav(item);
-      // updateState(selected);
+      updatePanel(content);
     }
 
     if (e.key === "ArrowRight") {
       const item = findNextChild(nav, nav.querySelector('[aria-selected="true"]'));
+      const content = getElementById(item.getAttribute("aria-controls"));
       updateNav(item);
-      // updateState(selected);
+      updatePanel(content);
     }
   }
 
@@ -122,12 +122,7 @@ export function tabs(node, params) {
     /** @type {HTMLElement} */
     // @ts-expect-error
     const target = e.target;
-
-    const id = target.getAttribute("aria-controls");
-    if (!id) return;
-
-    const content = document.getElementById(id);
-    if (!content) return;
+    const content = getElementById(target.getAttribute("aria-controls"));
 
     updateNav(target);
     updatePanel(content);
@@ -135,33 +130,33 @@ export function tabs(node, params) {
   }
 
   /** Helpers */
-  /** @param {HTMLElement} element */
+  /** @param {Element | null} element */
   function updatePanel(element) {
+    if (!element || !(element instanceof HTMLElement)) return;
+
     const items = node.children;
 
-    if (element.getAttribute("data-state") !== "open") {
-      setAttributes(element, {
-        "data-state": "open",
-        hidden: false,
-      });
+    // if (element.getAttribute("data-state") !== "open") {
+    setAttributes(element, {
+      "data-state": "open",
+      hidden: false,
+    });
 
-      element.focus();
-
-      Array.from(items)
-        // exclude current item and the tablist
-        .filter((item) => item !== element && item.getAttribute("role") !== "tablist")
-        .forEach((item) => {
-          setAttributes(item, {
-            "data-state": "closed",
-            hidden: true,
-          });
+    Array.from(items)
+      // exclude current item and the tablist
+      .filter((item) => item !== element && item.getAttribute("role") !== "tablist")
+      .forEach((item) => {
+        setAttributes(item, {
+          "data-state": "closed",
+          hidden: true,
         });
-    }
+      });
+    // }
   }
 
-  /** @param {HTMLElement} element */
+  /** @param {Element} element */
   function updateNav(element) {
-    if (!nav) return;
+    if (!nav || !(element instanceof HTMLElement)) return;
 
     const items = nav.children;
 
