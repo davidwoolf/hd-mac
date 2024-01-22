@@ -1,5 +1,5 @@
 <script>
-  import { menubar, role } from "./actions/menubar.js";
+  import { menubar, role } from "@components/anatomykit/menubar.js";
 </script>
 
 <ul use:menubar class="menubar" {role}>

@@ -1,5 +1,5 @@
 <script>
-  import { controlswitch } from "./actions.js";
+  import { controlswitch } from "@components/anatomykit/switch.js";
 
   export let disabled = false;
   export let value = false;

@@ -7,7 +7,7 @@ import {
   addListener,
   getElementIndex,
   setAttributes,
-} from "@components/anatomykit/helpers";
+} from "@components/anatomykit/_helpers";
 
 /**
  *
@@ -15,6 +15,12 @@ import {
  * @param {Params} params
  */
 export function toolbar(node, params) {
+  /**
+   * @TODO
+   * - [ ] callback hooks
+   * - [ ] [data-*] states
+   */
+
   let enabled = false;
   let selected = 0;
   const actions = node.querySelectorAll("button");

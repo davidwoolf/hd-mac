@@ -9,7 +9,7 @@ import {
   selectNext,
   selectPrevious,
   setAttributes,
-} from "@components/anatomykit/helpers";
+} from "@components/anatomykit/_helpers";
 
 /**
  *
@@ -65,6 +65,8 @@ export function togglegroup(node, params) {
    * - [ ] looping
    * - [ ] rovingFocus
    * - [ ] allow multiple
+   * - [ ] callback hooks
+   * - [ ] [data-*] states
    */
   let enabled = false;
   let selected = 0;

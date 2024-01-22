@@ -2,9 +2,9 @@
 
 :root {
   /* Colors */
-  --color-document: #c4c4c4;
-  --color-canvas: #ffffff;
-  --color-highlight: #000000;
+  --color-canvas: Canvas;
+  --color-highlight: CanvasText;
+  --color-document: color-mix(in srgb, var(--color-canvas), var(--color-highlight) 20%);
 
   /* Radius */
   --radius-sm: 0.125rem;

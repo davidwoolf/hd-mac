@@ -1,5 +1,5 @@
 <script>
-  import { togglegroup } from "./action";
+  import { togglegroup } from "@components/anatomykit/toggle";
 </script>
 
 <div role="group" use:togglegroup={{}}>

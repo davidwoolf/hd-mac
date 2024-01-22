@@ -10,7 +10,7 @@ import {
   getElementById,
   getElementByQuery,
   setAttributes,
-} from "@components/anatomykit/helpers";
+} from "@components/anatomykit/_helpers";
 import { nanoid } from "nanoid";
 
 /**
@@ -25,6 +25,7 @@ export function tabs(node, params) {
    * - [ ] disabled
    * - [ ] disabled items
    * - [ ] callback hooks
+   * - [ ] [data-*] states
    * - [ ] value (ie: not the first tab open)
    */
 

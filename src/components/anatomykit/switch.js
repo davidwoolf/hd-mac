@@ -9,6 +9,13 @@
  * @param {Params} params
  */
 export function controlswitch(node, params) {
+  /**
+   * @TODO
+   * - [ ] helper functions
+   * - [ ] callback hooks
+   * - [ ] [data-*] states
+   */
+
   const button = node.querySelector('[role="switch"]');
 
   if (!button) {

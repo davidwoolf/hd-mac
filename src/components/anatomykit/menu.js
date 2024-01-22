@@ -75,6 +75,12 @@ function getMenuSelectors(selectors) {
  * @param {Params} params
  */
 export function menu(node, params) {
+  /**
+   * @TODO
+   * - [ ] callback hooks
+   * - [ ] [data-*] states
+   */
+
   // necessary to overwrite with new args on updates
   let enabled = params.enabled;
   let selected = -1;

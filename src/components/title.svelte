@@ -39,9 +39,9 @@
   }
 
   .close {
-    background-color: white;
-    border: 1px solid black;
-    box-shadow: 0 0 0 2px white;
+    background-color: var(--color-canvas);
+    border: 1px solid var(--color-highlight);
+    box-shadow: 0 0 0 2px var(--color-canvas);
     height: 1rem;
     left: 0.75rem;
     position: absolute;

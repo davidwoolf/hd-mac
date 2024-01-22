@@ -1,5 +1,5 @@
 <script>
-  import { tabs } from "./action";
+  import { tabs } from "@components/anatomykit/tabs";
 </script>
 
 <!-- 

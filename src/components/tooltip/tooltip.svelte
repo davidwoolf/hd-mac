@@ -1,5 +1,5 @@
 <script>
-  import { role, tooltip } from "./actions";
+  import { role, tooltip } from "@components/anatomykit/tooltip";
 
   /** @type {
     "top-left" | 

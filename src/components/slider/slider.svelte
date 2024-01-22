@@ -1,27 +1,41 @@
 <script>
+  import { slider } from "@components/anatomykit/slider";
+
   /** @type {string} */
   export let name;
-  /** @type {number} */
-  export let max;
-  /** @type {number} */
-  export let min;
+  export let min = 0;
+  export let max = 100;
   export let step = 1;
-  export let direction = "ltr";
-  export let showIndicators = false;
+  // export let direction = "ltr";
+  // export let showIndicators = false;
   /** @type {number | undefined} */
   export let value = undefined;
-  /** @type {((value: number | undefined) => void) | undefined} */
-  export let onUpdate = undefined;
+  /** @type {((value: number) => void)} */
+  export let onChange;
 
-  let notches = Array.from(Array(max - min + 1).keys());
+  // let notches = Array.from(Array(max - min + 1).keys());
 
-  $: onUpdate && onUpdate(value);
-  $: notches = Array.from(Array(max - min + 1).keys());
+  // $: onChange && onChange(value);
+  // $: notches = Array.from(Array(max - min + 1).keys());
 </script>
 
-<input type="range" {name} {min} {max} {step} style:--range-dir={direction} bind:value />
+<!-- dir="ltr" data-orientation="horizontal" aria-disabled="false" -->
 
-{#if showIndicators}
+<input type="range" {name} {min} {max} {step} bind:value />
+
+<span
+  use:slider={{
+    min,
+    max,
+    step,
+    value,
+    onChange,
+  }}>
+  <slot />
+</span>
+<input type="hidden" bind:value {name} />
+
+<!-- {#if showIndicators}
   <div class="notches">
     {#each notches as notch}
       <div class="notch">
@@ -32,10 +46,10 @@
       </div>
     {/each}
   </div>
-{/if}
+{/if} -->
 
 <style>
-  .notches {
+  /* .notches {
     display: flex;
     justify-content: space-between;
   }
@@ -58,37 +72,30 @@
   .notch span {
     font-family: var(--font-secondary);
     font-size: var(--font-size-small);
+  } */
+
+  span {
+    display: flex;
+    position: relative;
+
+    -webkit-user-select: none;
+    touch-action: none;
   }
 
-  input {
-    -webkit-appearance: none;
-    appearance: none;
-    background: transparent;
-    cursor: grab;
-    height: 1.25rem;
-    direction: var(--range-dir);
-    width: 100%;
-  }
+  /* input::-webkit-slider-runnable-track {
+    border-radius: 9999px;
+    box-shadow: 0 0 0 1px var(--color-canvas), 0 0 0 2px var(--color-highlight);
+    height: 0.5rem;
+  } */
 
-  input:active {
-    cursor: grabbing;
-  }
-
-  input::-webkit-slider-runnable-track {
+  /* input::-moz-range-track {
     background: var(--color-document);
     border-radius: 9999px;
     box-shadow: 0 0 0 1px var(--color-canvas), 0 0 0 2px var(--color-highlight);
     height: 0.5rem;
-  }
+  } */
 
-  input::-moz-range-track {
-    background: var(--color-document);
-    border-radius: 9999px;
-    box-shadow: 0 0 0 1px var(--color-canvas), 0 0 0 2px var(--color-highlight);
-    height: 0.5rem;
-  }
-
-  input::-webkit-slider-thumb {
+  /* input::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
     box-sizing: border-box;
@@ -99,9 +106,9 @@
     height: 1.25rem;
     margin-top: -0.375rem;
     width: 0.375rem;
-  }
+  } */
 
-  input::-moz-range-thumb {
+  /* input::-moz-range-thumb {
     -moz-appearance: none;
     box-sizing: border-box;
     appearance: none;
@@ -112,7 +119,7 @@
     height: 1.25rem;
     margin-top: -0.375rem;
     width: 0.375rem;
-  }
+  } */
 
   /* Removes default focus */
   input:focus {
@@ -126,8 +133,8 @@
   }
 
   /* Firefox */
-  input:focus::-moz-range-thumb {
+  /* input:focus::-moz-range-thumb {
     box-shadow: 0 0 0 1px var(--color-canvas), 0 0 0 3px var(--color-highlight);
     outline: none;
-  }
+  } */
 </style>

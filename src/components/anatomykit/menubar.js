@@ -2,7 +2,7 @@ import {
   getElementIndex,
   selectNext,
   selectPrevious,
-} from "@components/anatomykit/helpers";
+} from "@components/anatomykit/_helpers";
 
 /**
  *
@@ -33,6 +33,13 @@ function getMenuBarSelectors(selectors) {
  * @param {Params} [params]
  */
 export function menubar(node, params) {
+  /**
+   * @TODO
+   * - [ ] helper functions
+   * - [ ] callback hooks
+   * - [ ] [data-*] states
+   */
+
   /* Args */
   const eventName = "menubar-menu-request";
   const keys = ["ArrowLeft", "ArrowRight", "ArrowDown", "ArrowUp"];

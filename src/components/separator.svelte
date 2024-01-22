@@ -8,7 +8,6 @@
 
 <div
   role="separator"
-  aria-orientation={orientation}
   style:--height={orientation === "horizontal" ? "1px" : height}
   style:--width={orientation === "vertical" ? "1px" : width} />
 

@@ -8,7 +8,7 @@ import {
   getElementIndex,
   selectNext,
   selectPrevious,
-} from "@components/anatomykit/helpers";
+} from "@components/anatomykit/_helpers";
 import { nanoid } from "nanoid";
 
 /**

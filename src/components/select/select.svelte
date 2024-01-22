@@ -1,5 +1,5 @@
 <script>
-  import { select } from "./action.js";
+  import { select } from "@components/anatomykit/select.js";
 </script>
 
 <div use:select={{}}>

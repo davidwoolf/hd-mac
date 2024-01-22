@@ -1,5 +1,5 @@
 <script>
-  import { accordion } from "./action";
+  import { accordion } from "@components/anatomykit/accordion";
 </script>
 
 <div use:accordion={{}}>

@@ -9,7 +9,7 @@ import {
   selectNext,
   selectPrevious,
   setAttributes,
-} from "@components/anatomykit/helpers";
+} from "@components/anatomykit/_helpers";
 import { nanoid } from "nanoid";
 
 /**
@@ -27,6 +27,8 @@ export function select(node, params) {
    * - [ ] disabled
    * - [ ] required
    * - [ ] placeholder
+   * - [ ] callback hooks
+   *
    */
 
   let enabled = false;

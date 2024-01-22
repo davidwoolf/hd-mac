@@ -1,5 +1,5 @@
 <script>
-  import { toggle } from "./action";
+  import { toggle } from "@components/anatomykit/toggle";
 
   export let value = false;
 </script>

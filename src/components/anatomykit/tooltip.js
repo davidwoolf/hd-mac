@@ -1,4 +1,4 @@
-import { addListener } from "@components/anatomykit/helpers";
+import { addListener } from "@components/anatomykit/_helpers";
 import { tick } from "svelte";
 
 /**
@@ -14,6 +14,15 @@ import { tick } from "svelte";
  * @param {Params} params
  */
 export function tooltip(node, params) {
+  /**
+   * @TODO
+   * - [ ] callback hook
+   * - [ ] screen reading tests
+   * - [ ] [data-*] states
+   * - [ ] delay
+   *
+   */
+
   let focused = false;
   let scopedOffset = "offset" in params && params.offset ? params.offset : 0;
   let scopedPosition =

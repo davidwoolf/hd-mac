@@ -1,5 +1,5 @@
 <script>
-  import { menuRole, itemRole, menu, generateId } from "./actions/menu.js";
+  import { menuRole, itemRole, menu, generateId } from "@components/anatomykit/menu.js";
   /** @type {string} */
   export let label;
 

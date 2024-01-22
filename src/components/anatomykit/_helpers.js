@@ -82,13 +82,14 @@ export function selectNext(items, current) {
 
 /**
  *
- * @param {Element | Window & typeof globalThis} element
+ * @param {Element | Window & typeof globalThis | null} element
  * @param {string} action
  * @param {any} listener
  */
 export function addListener(element, action, listener) {
-  element.addEventListener(action, listener);
+  if (!element) return () => undefined;
 
+  element.addEventListener(action, listener);
   return () => element.removeEventListener(action, listener);
 }
 
@@ -125,12 +126,17 @@ export function getElementById(id) {
  *
  * @param {Element | HTMLElement} root
  * @param {string} query
+ * @param {string} [errorMessage]
  */
-export function getElementByQuery(root, query) {
+export function getElementByQuery(root, query, errorMessage) {
   const element = root.querySelector(query);
 
   if (!element || !(element instanceof HTMLElement)) {
-    throw new Error(`an required element matching ${query} is missing`);
+    if (errorMessage) {
+      throw new Error(errorMessage);
+    } else {
+      throw new Error(`an required element matching ${query} is missing`);
+    }
   }
 
   return element;

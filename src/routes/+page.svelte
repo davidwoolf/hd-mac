@@ -1,33 +1,59 @@
 <script>
+  import "../app.css";
+
+  import image from "$lib/images/test.png";
   import Window from "@components/window.svelte";
   import MenuBar from "@components/menu/bar.svelte";
-
-  /* AnatomyKit */
+  /* Button */
   import Button from "@components/button.svelte";
+
+  /** AnatomyKit */
+  /* Avatar */
+  import Avatar from "@components/avatar/avatar.svelte";
+  import AvatarImage from "@components/avatar/image.svelte";
+  import AvatarFallback from "@components/avatar/fallback.svelte";
+  /* Menus */
   import Menu from "@components/menu/menu.svelte";
   import MenuItem from "@components/menu/item.svelte";
+  /* Dialog */
   import Dialog from "@components/dialog/dialog.svelte";
   import DialogButton from "@components/dialog/button.svelte";
   import DialogContent from "@components/dialog/content.svelte";
+  import DialogTitle from "@components/dialog/title.svelte";
+  import DialogDescription from "@components/dialog/description.svelte";
+  /* AlertDialog */
+  import AlertDialog from "@components/alertdialog/dialog.svelte";
+  import AlertDialogButton from "@components/alertdialog/button.svelte";
+  import AlertDialogContent from "@components/alertdialog/content.svelte";
+  import AlertDialogTitle from "@components/alertdialog/title.svelte";
+  import AlertDialogDescription from "@components/alertdialog/description.svelte";
+  /* Progress */
   import Progress from "@components/progress.svelte";
+  /* Separator */
   import Separator from "@components/separator.svelte";
+  /* Slider */
   import Slider from "@components/slider/slider.svelte";
+  import SliderTrack from "@components/slider/track.svelte";
+  import SliderRange from "@components/slider/range.svelte";
+  import SliderThumb from "@components/slider/thumb.svelte";
+  /* Switch */
   import Switch from "@components/switch/switch.svelte";
+  /* Tooltip */
   import Tooltip from "@components/tooltip/tooltip.svelte";
-  import "../app.css";
+  /* Toggle */
   import Toggle from "@components/toggle/toggle.svelte";
   import ToggleGroup from "@components/toggle/group.svelte";
+  /* Accordion */
   import Accordion from "@components/accordion/accordion.svelte";
   import AccordionItem from "@components/accordion/item.svelte";
   import AccordionTrigger from "@components/accordion/trigger.svelte";
   import AccordionContent from "@components/accordion/content.svelte";
-
+  /* Tabs */
   import Tabs from "@components/tabs/tabs.svelte";
   import TabsList from "@components/tabs/list.svelte";
   import TabsTrigger from "@components/tabs/trigger.svelte";
   import TabsContent from "@components/tabs/content.svelte";
-
-  // Select
+  /* Select */
   import Select from "@components/select/select.svelte";
   import SelectContent from "@components/select/content.svelte";
   import SelectTrigger from "@components/select/trigger.svelte";
@@ -35,9 +61,14 @@
   import SelectGroup from "@components/select/group.svelte";
   import SelectOption from "@components/select/option.svelte";
   import SelectSeparator from "@components/select/separator.svelte";
-
-  // Toolbar
+  /* Toolbar */
   import Toolbar from "@components/toolbar/toolbar.svelte";
+  /* Collapsible */
+  import Collapsible from "@components/collapsible/collapsible.svelte";
+  import CollapsibleTrigger from "@components/collapsible/trigger.svelte";
+  import CollapsibleContent from "@components/collapsible/content.svelte";
+
+  let sliderValue = 3;
 </script>
 
 <header>
@@ -61,26 +92,52 @@
 </header>
 
 <main>
-  <Window title="System Disk" width={576} height={500} left={100} top={50}>
+  <Window title="System Disk" width={576} height={700} left={100} top={50}>
+    <Avatar>
+      <AvatarImage src={image} alt="Finder graphic" />
+      <AvatarFallback>DW</AvatarFallback>
+    </Avatar>
+
     <Dialog>
       <DialogButton>About</DialogButton>
 
       <DialogContent>
-        <p>This is a retro playground</p>
+        <DialogTitle>Title</DialogTitle>
+
+        <DialogDescription>This is a retro playground</DialogDescription>
       </DialogContent>
     </Dialog>
+
+    <AlertDialog>
+      <AlertDialogButton>Destroy</AlertDialogButton>
+
+      <AlertDialogContent>
+        <AlertDialogTitle>Destroy everything?</AlertDialogTitle>
+
+        <AlertDialogDescription>Do it!</AlertDialogDescription>
+      </AlertDialogContent>
+    </AlertDialog>
 
     <!-- svelte-ignore a11y-label-has-associated-control -->
     <label style:width="12rem" style:display="block">
       <span>Volume</span>
 
       <Slider
-        name="volumn"
+        name="volume"
+        step={0.1}
         min={1}
         max={7}
-        value={3}
-        showIndicators={true}
-        onUpdate={(value) => {}} />
+        value={sliderValue}
+        onChange={(value) => {
+          sliderValue = value;
+          console.log(value);
+        }}>
+        <SliderTrack>
+          <SliderRange />
+        </SliderTrack>
+
+        <SliderThumb aria-label="Volume" />
+      </Slider>
     </label>
 
     <div style:height="30px" />
@@ -101,9 +158,22 @@
       <Toggle value={false}>press me</Toggle>
       <Toggle value={false}>press me</Toggle>
     </ToggleGroup>
+
+    <Collapsible>
+      <span>more info</span>
+
+      <CollapsibleTrigger>show</CollapsibleTrigger>
+
+      <p>item one</p>
+
+      <CollapsibleContent>
+        <p>item two</p>
+        <p>item three</p>
+      </CollapsibleContent>
+    </Collapsible>
   </Window>
 
-  <Window title="Finder" width={476} height={500} left={776} top={50}>
+  <Window title="Finder" width={476} height={700} left={776} top={50}>
     <Accordion>
       <AccordionItem>
         <AccordionTrigger>Item 1</AccordionTrigger>
@@ -190,9 +260,9 @@
   }
 
   header {
-    background-color: white;
+    background-color: var(--color-canvas);
     border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-    border-bottom: 1px solid var(--color-highlight);
+    border-bottom: 1px solid black;
     height: 2rem;
     padding: 0 1rem;
     position: relative;

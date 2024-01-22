@@ -1,5 +1,5 @@
 <script>
-  import { dialog } from "./actions";
+  import { dialog } from "@components/anatomykit/dialog";
 </script>
 
 <div use:dialog>

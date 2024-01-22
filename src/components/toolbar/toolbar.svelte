@@ -1,5 +1,5 @@
 <script>
-  import { toolbar } from "./action";
+  import { toolbar } from "@components/anatomykit/toolbar";
   /** @type {string} */
   export let label;
 </script>

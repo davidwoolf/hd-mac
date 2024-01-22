@@ -24,9 +24,9 @@
 
 <style>
   .container {
-    background: #fff;
-    border: 1px solid var(--color-highlight);
-    box-shadow: 3px 3px 0px 0px var(--color-highlight);
+    background: var(--color-canvas);
+    border: 1px solid black;
+    box-shadow: 3px 3px 0px 0px black;
     position: absolute;
   }
 
