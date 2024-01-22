@@ -112,6 +112,26 @@ export function setAttributes(element, attributes) {
 
 /**
  *
+ * @param {HTMLElement | null} element
+ * @param {Record<string, string | number>} styles
+ */
+export function setStyles(element, styles) {
+  if (!element) return;
+
+  Object.entries(styles).forEach(([key, value]) => {
+    if (
+      typeof key === "string" &&
+      (typeof value === "string" || typeof value === "number")
+    ) {
+      element.style.setProperty(key, String(value));
+    } else {
+      console.warn("attempting to apply an invalid style value", element, key, value);
+    }
+  });
+}
+
+/**
+ *
  * @param {string | null | undefined} id
  */
 export function getElementById(id) {
@@ -140,4 +160,21 @@ export function getElementByQuery(root, query, errorMessage) {
   }
 
   return element;
+}
+
+/**
+ *
+ * @param {number} value
+ * @param {number} min
+ * @param {number} max
+ * @returns
+ */
+export function clamp(value, min, max) {
+  if (value <= min) {
+    return min;
+  } else if (value >= max) {
+    return max;
+  } else {
+    return value;
+  }
 }

@@ -68,7 +68,7 @@
   import CollapsibleTrigger from "@components/collapsible/trigger.svelte";
   import CollapsibleContent from "@components/collapsible/content.svelte";
 
-  let sliderValue = 3;
+  let sliderValue = 50;
 </script>
 
 <header>
@@ -124,13 +124,13 @@
 
       <Slider
         name="volume"
-        step={0.1}
-        min={1}
-        max={7}
+        min={0}
+        max={100}
+        step={1}
         value={sliderValue}
+        orientation="horizontal"
         onChange={(value) => {
           sliderValue = value;
-          console.log(value);
         }}>
         <SliderTrack>
           <SliderRange />
